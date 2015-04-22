@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+       <!-- aop拦截器，拦截Service方法调用 -->
+       <bean class="com.ydpp.aop.AccessControllableInterceptor"/>
+
+       <!-- Session拦截器，拦截用户登录，注入用户信息 -->
+       <bean id="sessionIterceptor" class="com.ydpp.aop.SessionIterceptor"/>
+
+       <mvc:interceptors>
+              <mvc:interceptor>
+                     <mvc:mapping path="/**"/>
+                     <mvc:exclude-mapping path="/login"/>
+                     <ref bean="sessionIterceptor"/>
+              </mvc:interceptor>
+       </mvc:interceptors>
+
+</beans>
